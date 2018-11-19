@@ -1,0 +1,9 @@
+<div class="area" appMoveableArea>
+  <div class="box" appMoveable>
+    Trapped
+  </div>
+  <div *ngFor="let box of boxes" class="box" appMoveable> 
+    {{box}}
+  </div>
+</div>
+<button (click)="addBox()">Add Box</button>

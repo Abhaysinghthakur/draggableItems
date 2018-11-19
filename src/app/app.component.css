@@ -1,0 +1,16 @@
+.box{
+    background: #bada55;
+    padding: 10px 20px;
+    border:1px solid black;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.dragging{
+    background: coral!important;
+}
+
+.area{
+    background:  #c0ffee;
+    padding: 50px;
+}
