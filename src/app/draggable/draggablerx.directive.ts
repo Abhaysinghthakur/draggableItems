@@ -1,14 +1,14 @@
-import { Directive, HostBinding, HostListener, Output,EventEmitter, OnInit } from '@angular/core';
+import { Directive, HostBinding, HostListener, Output, EventEmitter, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { switchMap,takeUntil, repeat,take } from 'rxjs/operators'; 
+import { switchMap, takeUntil, repeat, take } from 'rxjs/operators';
 
 @Directive({
   selector: '[appDraggablerx]'
 })
-export class DraggablerxDirective implements OnInit{
+export class DraggablerxDirective implements OnInit {
 
   @HostBinding('class.draggable') draggable = true;
-  @HostBinding('class.dragging') dragging: boolean = false;
+  @HostBinding('class.dragging') dragging = false;
 
 
   @Output() dragStart = new EventEmitter<PointerEvent>();
@@ -19,44 +19,44 @@ export class DraggablerxDirective implements OnInit{
   private pointerMove = new Subject<PointerEvent>();
   private pointerUp = new Subject<PointerEvent>();
 
-  @HostListener('pointerdown',['$event'])
-  onPointerDown(event:PointerEvent):void{
+  @HostListener('pointerdown', ['$event'])
+  onPointerDown(event: PointerEvent): void {
     this.pointerDown.next(event);
   }
 
-  @HostListener('document:pointermove',['$event'])
-  onpointerMove(event:PointerEvent):void{
+  @HostListener('document:pointermove', ['$event'])
+  onpointerMove(event: PointerEvent): void {
     this.pointerMove.next(event);
   }
 
-  @HostListener('document:pointerup',['$event'])
-  onPointerUp(event:PointerEvent):void{
+  @HostListener('document:pointerup', ['$event'])
+  onPointerUp(event: PointerEvent): void {
     this.pointerUp.next(event);
   }
 
-  ngOnInit():void{
+  ngOnInit(): void {
 
     this.pointerDown.asObservable().subscribe(
-      event=>{
+      event => {
         this.dragStart.emit(event);
         this.dragging = true;
       }
     );
 
     const dragMoves = this.pointerDown.pipe(
-      switchMap(()=>this.pointerMove),
+      switchMap(() => this.pointerMove),
       takeUntil(this.pointerUp),
       repeat()
     ).subscribe(
-      event=>this.dragMove.emit(event)
+      event => this.dragMove.emit(event)
     );
 
     const dragEnds = this.pointerDown.pipe(
-      switchMap(()=>this.pointerUp),
+      switchMap(() => this.pointerUp),
       take(1),
       repeat()
     ).subscribe(
-      event=>{
+      event => {
         this.dragEnd.emit(event);
         this.dragging = false;
       }

@@ -10,6 +10,6 @@ import { MoveableAreaDirective } from './moveable-area.directive';
     CommonModule
   ],
   declarations: [DraggableDirective, DraggablerxDirective, MoveableDirective, MoveableAreaDirective],
-  exports:[DraggableDirective,DraggablerxDirective,MoveableDirective,MoveableAreaDirective]
+  exports: [DraggableDirective, DraggablerxDirective, MoveableDirective, MoveableAreaDirective]
 })
 export class DraggableModule { }

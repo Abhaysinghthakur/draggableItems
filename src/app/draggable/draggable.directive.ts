@@ -1,4 +1,4 @@
-import { Directive, HostBinding, HostListener, Output,EventEmitter } from '@angular/core';
+import { Directive, HostBinding, HostListener, Output, EventEmitter } from '@angular/core';
 
 @Directive({
   selector: '[appDraggable]'
@@ -10,25 +10,25 @@ export class DraggableDirective {
   @Output() dragMove = new EventEmitter<PointerEvent>();
   @Output() dragEnd = new EventEmitter<PointerEvent>();
 
-  @HostBinding('class.dragging') dragging: boolean = false;
+  @HostBinding('class.dragging') dragging = false;
 
-  @HostListener('pointerdown',['$event'])
-  onPointerDown(event:PointerEvent): void {
+  @HostListener('pointerdown', ['$event'])
+  onPointerDown(event: PointerEvent): void {
     this.dragging = true;
     event.stopPropagation();
     this.dragStart.emit(event);
   }
 
-  @HostListener('document:pointermove',['$event'])
-  onPointerMove(event:PointerEvent): void {
+  @HostListener('document:pointermove', ['$event'])
+  onPointerMove(event: PointerEvent): void {
     if (!this.dragging) {
       return;
     }
     this.dragMove.emit(event);
   }
 
-  @HostListener('document:pointerup',['$event'])
-  onPointerUp(event:PointerEvent): void {
+  @HostListener('document:pointerup', ['$event'])
+  onPointerUp(event: PointerEvent): void {
     if (!this.dragging) {
       return;
     }
